@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Olga Danilova](https://up.htmlacademy.ru/javascript/21/user/1126609).
-* Наставник: `Неизвестно`.
+* Наставник: [Старчиков Павел] (https://htmlacademy.ru/profile/id921875).
 
 ---
 
