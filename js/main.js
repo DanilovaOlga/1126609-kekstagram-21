@@ -8,13 +8,15 @@ const getPhotoData = function () {
   const photoData = [];
 
   for (let i = 0; i < 25; i++) {
-    const likes = getRandomNumber(15, 200);
+    const MIN_LIKES = 15;
+    const MAX_LIKES = 200;
+    const likes = getRandomNumber(MIN_LIKES, MAX_LIKES);
     const url = "photos/" + (i + 1) + ".jpg";
     const comments = [];
     const commentsLength = likes / 10;
 
     for (let j = 0; j < commentsLength; j++) {
-      comments.push([j]);
+      comments[j] = getComment();
     }
 
     photoData[i] = {
@@ -44,8 +46,8 @@ const getComment = function () {
     "Саша",
   ];
   const avatarNumber = getRandomNumber(1, 6);
-  const name = names[getRandomNumber(0, NAMES.length - 1)];
-  const message = messages[getRandomNumber(0, MESSAGES.length - 1)];
+  const name = NAMES[getRandomNumber(0, NAMES.length - 1)];
+  const message = MESSAGES[getRandomNumber(0, MESSAGES.length - 1)];
   return {
     avatar: "img/avatar-" + avatarNumber + ".svg",
     message: message,
