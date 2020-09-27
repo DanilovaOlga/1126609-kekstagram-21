@@ -10,12 +10,12 @@ const getPhotoData = function () {
   for (let i = 0; i < 25; i++) {
     const MIN_LIKES = 15;
     const MAX_LIKES = 200;
-    const likes = getRandomNumber(MIN_LIKES, MAX_LIKES);
     const url = "photos/" + (i + 1) + ".jpg";
+    const likes = getRandomNumber(MIN_LIKES, MAX_LIKES);
     const comments = [];
-    const commentsLength = likes / 10;
+    const commentsQty = likes / 10;
 
-    for (let j = 0; j < commentsLength; j++) {
+    for (let j = 0; j < commentsQty; j++) {
       comments[j] = getComment();
     }
 
@@ -30,21 +30,8 @@ const getPhotoData = function () {
 };
 
 const getComment = function () {
-  const MESSAGES = [
-    "Всё отлично!",
-    "В целом всё неплохо. Но не всё.",
-    "Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.",
-    "Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.",
-    "Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.",
-    "Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!"
-  ];
-  const NAMES = [
-    "Иван",
-    "Петр",
-    "Мария",
-    "Нина",
-    "Саша",
-  ];
+  const MESSAGES = window.getCommentMessages();
+  const NAMES = window.getName();
   const avatarNumber = getRandomNumber(1, 6);
   const name = NAMES[getRandomNumber(0, NAMES.length - 1)];
   const message = MESSAGES[getRandomNumber(0, MESSAGES.length - 1)];
@@ -57,10 +44,11 @@ const getComment = function () {
 
 const pictures = document.querySelector(".pictures");
 const pictureTemplate = document.querySelector("#picture").content.querySelector(".picture");
+const photoData = getPhotoData();
 
-for (let i = 0; i < getPhotoData().length; i++) {
+for (let i = 0; i < photoData.length; i++) {
   const picture = pictureTemplate.cloneNode(true);
-  const photoDataItem = getPhotoData()[i];
+  const photoDataItem = photoData[i];
   picture.querySelector(".picture__img").src = photoDataItem.url;
   picture.querySelector(".picture__likes").textContent = photoDataItem.likes;
   picture.querySelector(".picture__comments").textContent = photoDataItem.comments;
