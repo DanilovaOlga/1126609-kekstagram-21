@@ -13,7 +13,7 @@ window.placePhotosToPictures = function (photos, pictures, template) {
 
 window.placeDataToBigPhoto = function (photoData, bigPhotoElem) {
 
-  //Добавить фото и описание
+  // Добавить фото и описание
   bigPhotoElem.querySelector(".big-picture__img img").src = photoData.url;
   const bigPictureSocial = bigPhotoElem.querySelector(".big-picture__social");
   bigPictureSocial.querySelector(".likes-count").textContent = photoData.likes;
@@ -39,8 +39,8 @@ window.placeDataToBigPhoto = function (photoData, bigPhotoElem) {
 
 window.showBigPhoto = function (photoNumber) {
   document.querySelector("body").classList.add("modal-open");
-  bigPicture.classList.remove("hidden");
-  window.placeDataToBigPhoto(photoNumber, bigPicture);
+  window.bigPicture.classList.remove("hidden");
+  window.placeDataToBigPhoto(photoNumber, window.bigPicture);
   document.querySelector(".social__comment-count").classList.add("hidden");
   document.querySelector(".comments-loader").classList.add("hidden");
 };
