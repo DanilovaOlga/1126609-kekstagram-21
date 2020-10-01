@@ -46,9 +46,32 @@ window.showBigPhoto = function (photoNumber) {
 };
 
 // Загрузка фотографии, открытие формы для редактирования
-const editPhotoForm = document.querySelector(".img-upload__overlay");
-const uploadPhotoButton = document.querySelector(".img-upload__input");
-const closeEditPhotoFormButton = document.querySelector(".img-upload__cancel");
+const uploadPhotoForm = document.querySelector("#upload-select-image");
+const editPhotoForm = uploadPhotoForm.querySelector(".img-upload__overlay");
+const uploadPhotoButton = uploadPhotoForm.querySelector("#upload-file");
+const closeEditPhotoFormButton = uploadPhotoForm.querySelector(".img-upload__cancel");
+const photoPreview = editPhotoForm.querySelector(".img-upload__preview img");
+
+// Удаление класса с фильтром
+const removeFilter = function () {
+  for (let i = 0; i < photoPreview.classList.length; i++) {
+    const filterName = photoPreview.classList[i];
+    if (filterName.startsWith("effects__preview--")) {
+      photoPreview.classList.remove(filterName);
+    }
+  }
+};
+
+// Выбор фильтра
+const photoFilterChangeHandler = function (evt) {
+  if (evt.target && evt.target.matches(".effects__radio")) {
+    removeFilter();
+    photoPreview.classList.add("effects__preview--" + evt.target.value);
+  }
+};
+
+uploadPhotoForm.addEventListener("change", photoFilterChangeHandler);
+
 
 const inEditPhotoFormEscPress = function (evt) {
   if (evt.key === 'Escape') {
@@ -66,6 +89,7 @@ const closeEditPhotoForm = function () {
   editPhotoForm.classList.add("hidden");
   window.body.classList.remove("modal-open");
   window.removeEventListener("keydown", inEditPhotoFormEscPress);
+  removeFilter();
 };
 
 uploadPhotoButton.addEventListener("change", function (evt) {
