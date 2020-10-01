@@ -38,9 +38,42 @@ window.placeDataToBigPhoto = function (photoData, bigPhotoElem) {
 };
 
 window.showBigPhoto = function (photoNumber) {
-  document.querySelector("body").classList.add("modal-open");
-  window.bigPicture.classList.remove("hidden");
+  // document.querySelector("body").classList.add("modal-open");
+  // window.bigPicture.classList.remove("hidden");
   window.placeDataToBigPhoto(photoNumber, window.bigPicture);
   document.querySelector(".social__comment-count").classList.add("hidden");
   document.querySelector(".comments-loader").classList.add("hidden");
 };
+
+// Загрузка фотографии, открытие формы для редактирования
+const editPhotoForm = document.querySelector(".img-upload__overlay");
+const uploadPhotoButton = document.querySelector(".img-upload__input");
+const closeEditPhotoFormButton = document.querySelector(".img-upload__cancel");
+
+const inEditPhotoFormEscPress = function (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closeEditPhotoForm();
+  }
+};
+
+const openEditPhotoForm = function () {
+  editPhotoForm.classList.remove("hidden");
+  window.body.classList.add("modal-open");
+  window.addEventListener("keydown", inEditPhotoFormEscPress);
+};
+const closeEditPhotoForm = function () {
+  editPhotoForm.classList.add("hidden");
+  window.body.classList.remove("modal-open");
+  window.removeEventListener("keydown", inEditPhotoFormEscPress);
+};
+
+uploadPhotoButton.addEventListener("change", function (evt) {
+  evt.preventDefault();
+  openEditPhotoForm();
+});
+
+closeEditPhotoFormButton.addEventListener("click", function (evt) {
+  evt.preventDefault();
+  closeEditPhotoForm();
+});
