@@ -58,6 +58,7 @@ const effectLevelLine = effectLevelSlider.querySelector(".effect-level__line");
 const effectLevelDepth = effectLevelSlider.querySelector(".effect-level__depth");
 const effectLevelPin = effectLevelSlider.querySelector(".effect-level__pin");
 const effectLevel = effectLevelSlider.querySelector(".effect-level__value");
+let currentFilterName = "none";
 
 // Удаление класса с фильтром
 const removeFilter = function () {
@@ -69,16 +70,13 @@ const removeFilter = function () {
   }
 };
 
-// Значение насыщенности эффекта фильтра
-const getEffectLevel = function () {
-  const newEffectLevelValue = Math.round((effectLevelDepth.clientWidth / effectLevelLine.clientWidth) * 100);
-  effectLevel.setAttribute("value", newEffectLevelValue.toString());
+const setEffectLevel = function (level) {
+  effectLevel.value = level;
 };
-
-
 
 // Установить фильтр
 const setFilter = function (filterName) {
+  currentFilterName = filterName;
   removeFilter();
   photoPreview.classList.add("effects__preview--" + filterName);
   if (filterName === "none") {
@@ -88,21 +86,26 @@ const setFilter = function (filterName) {
   else {
     effectLevelSlider.style.display = "block";
   }
-  getEffectLevel();
 
-  if (filterName === "chrome") {
+  setEffectLevel(100);
+  applyEffectLevel();
+};
+
+// Установить насыщенность
+const applyEffectLevel = function () {
+  if (currentFilterName === "chrome") {
     photoPreview.style.filter = "grayscale(" + (effectLevel.value / 100) + ")"
   }
-  else if (filterName === "sepia") {
+  else if (currentFilterName === "sepia") {
     photoPreview.style.filter = "sepia(" + (effectLevel.value / 100) + ")"
   }
-  else if (filterName === "marvin") {
+  else if (currentFilterName === "marvin") {
     photoPreview.style.filter = "invert(" + (effectLevel.value) + "%)"
   }
-  else if (filterName === "phobos") {
+  else if (currentFilterName === "phobos") {
     photoPreview.style.filter = "blur(" + ((effectLevel.value * 3) / 100) + "px)"
   }
-  else if (filterName === "heat") {
+  else if (currentFilterName === "heat") {
     photoPreview.style.filter = "brightness(" + ((effectLevel.value * 3) / 100 + 1) + ")"
   }
 };
@@ -129,11 +132,14 @@ const openEditPhotoForm = function () {
   window.addEventListener("keydown", inEditPhotoFormEscPress);
   setFilter("none");
 
-  effectLevelPin.addEventListener("mouseup", function () {
-    console.log("пуньк");
-  });
-  
 };
+
+effectLevelPin.addEventListener("mouseup", function () {
+  const newEffectLevelValue = Math.round((effectLevelDepth.clientWidth / effectLevelLine.clientWidth) * 100);
+  effectLevel.value = newEffectLevelValue.toString();
+  applyEffectLevel();
+});
+
 const closeEditPhotoForm = function () {
   editPhotoForm.classList.add("hidden");
   window.body.classList.remove("modal-open");
