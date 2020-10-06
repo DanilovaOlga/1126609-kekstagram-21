@@ -131,7 +131,7 @@ const openEditPhotoForm = function () {
   window.body.classList.add("modal-open");
   window.addEventListener("keydown", inEditPhotoFormEscPress);
   setFilter("none");
-
+  imageScaleValue.value = DEFAULT_IMAGE_SCALE_VALUE + "%";
 };
 
 effectLevelPin.addEventListener("mouseup", function () {
@@ -155,3 +155,37 @@ closeEditPhotoFormButton.addEventListener("click", function (evt) {
   evt.preventDefault();
   closeEditPhotoForm();
 });
+
+// Выбор размера изображения
+
+const imageScale = document.querySelector(".img-upload__scale");
+const zoomOutButton = imageScale.querySelector(".scale__control--smaller");
+const zoomInButton = imageScale.querySelector(".scale__control--bigger");
+const imageScaleValue = imageScale.querySelector(".scale__control--value");
+const MAX_IMAGE_SCALE_VALUE = 100;
+const MIN_IMAGE_SCALE_VALUE = 25;
+const DEFAULT_IMAGE_SCALE_VALUE = 100;
+const IMAGE_SCALE_STEP = 25;
+
+let currentImageScaleValue = DEFAULT_IMAGE_SCALE_VALUE;
+
+zoomOutButton.addEventListener("click", function (evt) {
+  evt.preventDefault();
+
+  if (MIN_IMAGE_SCALE_VALUE < currentImageScaleValue) {
+    currentImageScaleValue -= IMAGE_SCALE_STEP;
+    imageScaleValue.value = currentImageScaleValue + "%";
+  }
+});
+
+zoomInButton.addEventListener("click", function (evt) {
+  evt.preventDefault();
+
+  if (currentImageScaleValue < MAX_IMAGE_SCALE_VALUE) {
+    currentImageScaleValue += IMAGE_SCALE_STEP;
+    imageScaleValue.value = currentImageScaleValue + "%";
+  }
+});
+
+// Изменение размера изображения
+
