@@ -110,9 +110,18 @@ const applyEffectLevel = function () {
   }
 };
 
+// Обновить вид превьюшки по умолчанию
+
+const photoPreviewDefaultSettings = function () {
+  currentImageScaleValue = DEFAULT_IMAGE_SCALE_VALUE;
+  imageScaleValue.value = DEFAULT_IMAGE_SCALE_VALUE + "%";
+  photoPreview.style.transform = "scale(1)";
+};
+
 // Выбор фильтра
 const photoFilterChangeHandler = function (evt) {
   if (evt.target && evt.target.matches(".effects__radio")) {
+    photoPreviewDefaultSettings();
     setFilter(evt.target.value);
   }
 };
@@ -120,6 +129,10 @@ uploadPhotoForm.addEventListener("change", photoFilterChangeHandler);
 
 
 const inEditPhotoFormEscPress = function (evt) {
+  if (textHashtags === document.activeElement) {
+    return
+  }
+
   if (evt.key === 'Escape') {
     evt.preventDefault();
     closeEditPhotoForm();
@@ -174,6 +187,7 @@ zoomOutButton.addEventListener("click", function (evt) {
 
   if (MIN_IMAGE_SCALE_VALUE < currentImageScaleValue) {
     currentImageScaleValue -= IMAGE_SCALE_STEP;
+    photoPreview.style.transform = "scale(" + currentImageScaleValue / 100 + ")";
     imageScaleValue.value = currentImageScaleValue + "%";
   }
 });
@@ -183,9 +197,18 @@ zoomInButton.addEventListener("click", function (evt) {
 
   if (currentImageScaleValue < MAX_IMAGE_SCALE_VALUE) {
     currentImageScaleValue += IMAGE_SCALE_STEP;
+    photoPreview.style.transform = "scale(" + currentImageScaleValue / 100 + ")";
     imageScaleValue.value = currentImageScaleValue + "%";
   }
 });
 
-// Изменение размера изображения
+// Валидация хэштегов
 
+const textHashtags = uploadPhotoForm.querySelector(".text__hashtags");
+
+textHashtags.addEventListener("input", function () {
+  window.hashtagsString = textHashtags.value;
+  window.checkHashtagsValidity();
+  textHashtags.setCustomValidity(window.errorMessage);
+  textHashtags.reportValidity();
+});
