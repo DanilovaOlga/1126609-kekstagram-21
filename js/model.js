@@ -39,8 +39,8 @@ window.getPhotoData = function () {
 };
 
 window.checkHashtagsValidity = function () {
-  window.hashtagsString = hashtagsString.toLowerCase();
-  let hashtagsArray = hashtagsString.split(" ").filter(elem => elem !== "");
+  window.hashtagsString = window.hashtagsString.toLowerCase();
+  let hashtagsArray = window.hashtagsString.split(" ").filter((elem) => elem !== "");
   window.errorMessage = "";
   const re = /^#[a-zA-Z0-9]*$/;
   const MIN_HASHTAG_LENGTH = 2;
@@ -52,20 +52,16 @@ window.checkHashtagsValidity = function () {
 
     for (let j = i + 1; j < hashtagsArray.length; j++) {
       if (hashtagsArray[i] === hashtagsArray[j]) {
-        window.errorMessage = "Такой хэштег уже есть"
+        window.errorMessage = "Такой хэштег уже есть";
       }
     }
 
     if (re.test(hashtag) === false) {
       window.errorMessage = "Хэштег должен начинаться с символа # и состоять только из букв и цифр";
-    }
-
-    else if (hashtag.length < MIN_HASHTAG_LENGTH) {
+    } else if (hashtag.length < MIN_HASHTAG_LENGTH) {
       window.errorMessage = "Добавьте буквы или цифры";
-    }
-
-    else if (hashtag.length > MAX_HASHTAG_LENGTH) {
-      window.errorMessage = "Длина хэштега не должна превышать 20 символов"
+    } else if (hashtag.length > MAX_HASHTAG_LENGTH) {
+      window.errorMessage = "Длина хэштега не должна превышать 20 символов";
     }
   }
 

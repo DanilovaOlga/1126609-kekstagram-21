@@ -82,8 +82,7 @@ const setFilter = function (filterName) {
   if (filterName === "none") {
     effectLevelSlider.style.display = "none";
     photoPreview.style.filter = "";
-  }
-  else {
+  } else {
     effectLevelSlider.style.display = "block";
   }
 
@@ -94,19 +93,15 @@ const setFilter = function (filterName) {
 // Установить насыщенность
 const applyEffectLevel = function () {
   if (currentFilterName === "chrome") {
-    photoPreview.style.filter = "grayscale(" + (effectLevel.value / 100) + ")"
-  }
-  else if (currentFilterName === "sepia") {
-    photoPreview.style.filter = "sepia(" + (effectLevel.value / 100) + ")"
-  }
-  else if (currentFilterName === "marvin") {
-    photoPreview.style.filter = "invert(" + (effectLevel.value) + "%)"
-  }
-  else if (currentFilterName === "phobos") {
-    photoPreview.style.filter = "blur(" + ((effectLevel.value * 3) / 100) + "px)"
-  }
-  else if (currentFilterName === "heat") {
-    photoPreview.style.filter = "brightness(" + ((effectLevel.value * 3) / 100 + 1) + ")"
+    photoPreview.style.filter = "grayscale(" + (effectLevel.value / 100) + ")";
+  } else if (currentFilterName === "sepia") {
+    photoPreview.style.filter = "sepia(" + (effectLevel.value / 100) + ")";
+  } else if (currentFilterName === "marvin") {
+    photoPreview.style.filter = "invert(" + (effectLevel.value) + "%)";
+  } else if (currentFilterName === "phobos") {
+    photoPreview.style.filter = "blur(" + ((effectLevel.value * 3) / 100) + "px)";
+  } else if (currentFilterName === "heat") {
+    photoPreview.style.filter = "brightness(" + ((effectLevel.value * 3) / 100 + 1) + ")";
   }
 };
 
@@ -130,7 +125,7 @@ uploadPhotoForm.addEventListener("change", photoFilterChangeHandler);
 
 const inEditPhotoFormEscPress = function (evt) {
   if (textHashtags === document.activeElement) {
-    return
+    return;
   }
 
   if (evt.key === 'Escape') {
