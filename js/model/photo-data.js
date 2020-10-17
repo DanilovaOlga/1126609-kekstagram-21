@@ -43,5 +43,5 @@
   window.photoData = {
     getComment: getComment,
     getPhotoData: getPhotoData,
-  }
+  };
 })();

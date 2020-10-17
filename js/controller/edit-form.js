@@ -1,14 +1,14 @@
 "use strict";
 (function () {
 
-// Загрузка фотографии, открытие формы для редактирования
+  // Загрузка фотографии, открытие формы для редактирования
   window.uploadPhotoForm = document.querySelector(".img-upload__form");
-  const editPhotoForm = uploadPhotoForm.querySelector(".img-upload__overlay");
-  const closeEditPhotoFormButton = uploadPhotoForm.querySelector(".img-upload__cancel");
+  const editPhotoForm = window.uploadPhotoForm.querySelector(".img-upload__overlay");
+  const closeEditPhotoFormButton = window.uploadPhotoForm.querySelector(".img-upload__cancel");
   const photoPreview = editPhotoForm.querySelector(".img-upload__preview img");
   let currentFilterName = "none";
 
-// Обновить вид превьюшки по умолчанию
+  // Обновить вид превьюшки по умолчанию
   const photoPreviewDefaultSettings = function () {
     currentImageScaleValue = DEFAULT_IMAGE_SCALE_VALUE;
     imageScaleValue.value = DEFAULT_IMAGE_SCALE_VALUE + "%";
@@ -32,7 +32,7 @@
   };
 
 
-// Удаление класса с фильтром
+  // Удаление класса с фильтром
   const removeFilter = function () {
     for (let i = 0; i < photoPreview.classList.length; i++) {
       const filterName = photoPreview.classList[i];
@@ -43,22 +43,22 @@
   };
 
   const setEffectLevel = function (level) {
-    effectLevel.value = level;
+    window.effectLevel.value = level;
     applyEffectLevel();
   };
 
   // Установить насыщенность
   const applyEffectLevel = function () {
     if (currentFilterName === "chrome") {
-      photoPreview.style.filter = "grayscale(" + (effectLevel.value / 100) + ")";
+      photoPreview.style.filter = "grayscale(" + (window.effectLevel.value / 100) + ")";
     } else if (currentFilterName === "sepia") {
-      photoPreview.style.filter = "sepia(" + (effectLevel.value / 100) + ")";
+      photoPreview.style.filter = "sepia(" + (window.effectLevel.value / 100) + ")";
     } else if (currentFilterName === "marvin") {
-      photoPreview.style.filter = "invert(" + (effectLevel.value) + "%)";
+      photoPreview.style.filter = "invert(" + (window.effectLevel.value) + "%)";
     } else if (currentFilterName === "phobos") {
-      photoPreview.style.filter = "blur(" + ((effectLevel.value * 3) / 100) + "px)";
+      photoPreview.style.filter = "blur(" + ((window.effectLevel.value * 3) / 100) + "px)";
     } else if (currentFilterName === "heat") {
-      photoPreview.style.filter = "brightness(" + ((effectLevel.value * 3) / 100 + 1) + ")";
+      photoPreview.style.filter = "brightness(" + ((window.effectLevel.value * 3) / 100 + 1) + ")";
     }
   };
 
@@ -69,14 +69,14 @@
       setFilter(evt.target.value);
     }
   };
-  uploadPhotoForm.addEventListener("change", photoFilterChangeHandler);
+  window.uploadPhotoForm.addEventListener("change", photoFilterChangeHandler);
 
   window.slider.addEventListener("change", setEffectLevel);
 
-// Открыть/закрыть форму
+  // Открыть/закрыть форму
   const openEditPhotoForm = function () {
     editPhotoForm.classList.remove("hidden");
-    body.classList.add("modal-open");
+    window.body.classList.add("modal-open");
     window.addEventListener("keydown", inEditPhotoFormEscPress);
     setFilter("none");
     imageScaleValue.value = DEFAULT_IMAGE_SCALE_VALUE + "%";
@@ -84,7 +84,7 @@
 
   const closeEditPhotoForm = function () {
     editPhotoForm.classList.add("hidden");
-    body.classList.remove("modal-open");
+    window.body.classList.remove("modal-open");
     window.removeEventListener("keydown", inEditPhotoFormEscPress);
   };
 
@@ -94,7 +94,7 @@
   });
 
   const inEditPhotoFormEscPress = function (evt) {
-    if (textHashtags === document.activeElement) {
+    if (window.textHashtags === document.activeElement) {
       return;
     }
 
@@ -104,7 +104,7 @@
     }
   };
 
-// Выбор размера изображения
+  // Выбор размера изображения
   const imageScale = document.querySelector(".img-upload__scale");
   const zoomOutButton = imageScale.querySelector(".scale__control--smaller");
   const zoomInButton = imageScale.querySelector(".scale__control--bigger");
@@ -136,14 +136,14 @@
     }
   });
 
-// Валидация хэштегов
-  window.textHashtags = uploadPhotoForm.querySelector(".text__hashtags");
+  // Валидация хэштегов
+  window.textHashtags = window.uploadPhotoForm.querySelector(".text__hashtags");
 
-  textHashtags.addEventListener("input", function () {
-    window.hashtagsString = textHashtags.value;
+  window.textHashtags.addEventListener("input", function () {
+    window.hashtagsString = window.textHashtags.value;
     window.hashtagsValidity.checkHashtagsValidity();
-    textHashtags.setCustomValidity(window.errorMessage);
-    textHashtags.reportValidity();
+    window.textHashtags.setCustomValidity(window.errorMessage);
+    window.textHashtags.reportValidity();
   });
 
   window.editForm = {

@@ -3,8 +3,8 @@
 (function () {
 
   const checkHashtagsValidity = function () {
-    window.hashtagsString = hashtagsString.toLowerCase();
-    let hashtagsArray = hashtagsString.split(" ").filter((elem) => elem !== "");
+    window.hashtagsString = window.hashtagsString.toLowerCase();
+    let hashtagsArray = window.hashtagsString.split(" ").filter((elem) => elem !== "");
     window.errorMessage = "";
     const re = /^#[a-zA-Z0-9]*$/;
     const MIN_HASHTAG_LENGTH = 2;
@@ -36,5 +36,5 @@
 
   window.hashtagsValidity = {
     checkHashtagsValidity: checkHashtagsValidity,
-  }
+  };
 })();

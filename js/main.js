@@ -5,7 +5,7 @@
   const photoData = window.photoData.getPhotoData();
   const pictures = document.querySelector(".pictures");
   const pictureTemplate = document.querySelector("#picture").content.querySelector(".picture");
-  const uploadPhotoButton = uploadPhotoForm.querySelector("#upload-file");
+  const uploadPhotoButton = window.uploadPhotoForm.querySelector("#upload-file");
 
   window.bigPicture = document.querySelector(".big-picture");
   window.body = document.querySelector("body");

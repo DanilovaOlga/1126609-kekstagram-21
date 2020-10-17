@@ -26,5 +26,5 @@
   window.data = {
     getCommentMessages: getCommentMessages,
     getName: getName,
-  }
+  };
 })();

@@ -28,5 +28,5 @@
     show: show,
     hide: hide,
     addEventListener: addEventListener,
-  }
+  };
 })();

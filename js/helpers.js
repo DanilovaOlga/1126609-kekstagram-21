@@ -7,5 +7,5 @@
 
   window.helpers = {
     getRandomNumber: getRandomNumber,
-  }
+  };
 })();

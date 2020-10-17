@@ -15,5 +15,5 @@
 
   window.gallery = {
     placePhotosToPictures: placePhotosToPictures,
-  }
+  };
 })();

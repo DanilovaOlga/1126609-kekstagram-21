@@ -41,8 +41,5 @@
   window.preview = {
     placeDataToBigPhoto: placeDataToBigPhoto,
     showBigPhoto: showBigPhoto,
-  }
+  };
 })();
-
-
-
