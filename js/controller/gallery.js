@@ -2,9 +2,7 @@
 
 (function () {
 
-  window.gallery = {
-
-    placePhotosToPictures: function (photos, pictures, template) {
+  const placePhotosToPictures = function (photos, pictures, template) {
     for (let i = 0; i < photos.length; i++) {
       const picture = template.cloneNode(true);
       const photoDataItem = photos[i];
@@ -13,6 +11,9 @@
       picture.querySelector(".picture__comments").textContent = photoDataItem.comments.length;
       pictures.appendChild(picture);
     }
+  };
+
+  window.gallery = {
+    placePhotosToPictures: placePhotosToPictures,
   }
-}
 })();
