@@ -6,6 +6,7 @@
   const editPhotoForm = window.uploadPhotoForm.querySelector(".img-upload__overlay");
   const closeEditPhotoFormButton = window.uploadPhotoForm.querySelector(".img-upload__cancel");
   const photoPreview = editPhotoForm.querySelector(".img-upload__preview img");
+  const effectLevel = document.querySelector(".effect-level__value");
   let currentFilterName = "none";
 
   // Обновить вид превьюшки по умолчанию
@@ -22,13 +23,12 @@
     photoPreview.classList.add("effects__preview--" + filterName);
     if (filterName === "none") {
       window.slider.hide();
-      photoPreview.style.filter = "";
     } else {
       window.slider.show();
     }
 
     setEffectLevel(100);
-    applyEffectLevel();
+    applyEffectLevel(currentFilterName);
   };
 
 
@@ -43,24 +43,25 @@
   };
 
   const setEffectLevel = function (level) {
-    window.effectLevel.value = level;
-    applyEffectLevel();
+    effectLevel.value = level;
+    applyEffectLevel(currentFilterName);
   };
 
   // Установить насыщенность
-  const applyEffectLevel = function () {
-    if (currentFilterName === "chrome") {
-      photoPreview.style.filter = "grayscale(" + (window.effectLevel.value / 100) + ")";
-    } else if (currentFilterName === "sepia") {
-      photoPreview.style.filter = "sepia(" + (window.effectLevel.value / 100) + ")";
-    } else if (currentFilterName === "marvin") {
-      photoPreview.style.filter = "invert(" + (window.effectLevel.value) + "%)";
-    } else if (currentFilterName === "phobos") {
-      photoPreview.style.filter = "blur(" + ((window.effectLevel.value * 3) / 100) + "px)";
-    } else if (currentFilterName === "heat") {
-      photoPreview.style.filter = "brightness(" + ((window.effectLevel.value * 3) / 100 + 1) + ")";
-    }
+
+  const applyEffectLevel = function (filterName) {
+    const filter = {
+      chrome: "grayscale(" + (effectLevel.value / 100) + ")",
+      sepia: "sepia(" + (effectLevel.value / 100) + ")",
+      marvin: "invert(" + (effectLevel.value) + "%)",
+      phobos: "blur(" + ((effectLevel.value * 3) / 100) + "px)",
+      heat: "brightness(" + ((effectLevel.value * 3) / 100 + 1) + ")",
+      default: "",
+    };
+
+    photoPreview.style.filter = filter[filterName] || filter["default"];
   };
+
 
   // Выбор фильтра
   const photoFilterChangeHandler = function (evt) {
@@ -140,9 +141,9 @@
   window.textHashtags = window.uploadPhotoForm.querySelector(".text__hashtags");
 
   window.textHashtags.addEventListener("input", function () {
-    window.hashtagsString = window.textHashtags.value;
-    window.hashtagsValidity.checkHashtagsValidity();
-    window.textHashtags.setCustomValidity(window.errorMessage);
+
+    const errorMessage = window.hashtagsValidity.checkHashtagsValidity(window.textHashtags.value);
+    window.textHashtags.setCustomValidity(errorMessage);
     window.textHashtags.reportValidity();
   });
 
