@@ -10,6 +10,7 @@
 </head>
 
 <body>
+  <div class="error-banner" style="position:fixed;top:0;left:0;display:none;width:100%;padding:10px;color:#ffffff;background-color:#fb4b4a;text-align:center;"></div>
   <main>
 
     <!-- Фильтрация изображений от других пользователей -->
@@ -232,10 +233,11 @@
   <template id="messages">
     <div class="img-upload__message  img-upload__message--loading">Загружаем...</div>
   </template>
+
   <script src="js/data.js"></script>
   <script src="js/helpers.js"></script>
+  <script src="js/controller/load-data.js"></script>
   <script src="js/model/hashtags-validity.js"></script>
-  <script src="js/model/photo-data.js"></script>
   <script src="js/controller/gallery.js"></script>
   <script src="js/controller/preview.js"></script>
   <script src="js/controller/slider.js"></script>
