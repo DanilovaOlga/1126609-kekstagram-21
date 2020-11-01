@@ -1,19 +1,31 @@
-"use strict";
+'use strict';
 
 (function () {
 
-  const placePhotosToPictures = function (photos, pictures, template) {
-    for (let i = 0; i < photos.length; i++) {
-      const picture = template.cloneNode(true);
-      const photoDataItem = photos[i];
-      picture.querySelector(".picture__img").src = photoDataItem.url;
-      picture.querySelector(".picture__likes").textContent = photoDataItem.likes;
-      picture.querySelector(".picture__comments").textContent = photoDataItem.comments.length;
-      pictures.appendChild(picture);
-    }
+  const pictures = document.querySelector(`.pictures`);
+  const template = document.querySelector(`#picture`).content.querySelector(`.picture`);
+
+  const renderPhoto = (photo) => {
+    const picture = template.cloneNode(true);
+
+    picture.querySelector(`.picture__img`).src = photo.url;
+    picture.querySelector(`.picture__likes`).textContent = photo.likes;
+    picture.querySelector(`.picture__comments`).textContent = photo.comments.length;
+
+    return picture;
+  };
+
+  const renderPhotos = (photos) => {
+    const fragment = document.createDocumentFragment();
+
+    photos.forEach((item) => {
+      fragment.appendChild(renderPhoto(item));
+    });
+
+    pictures.appendChild(fragment);
   };
 
   window.gallery = {
-    placePhotosToPictures: placePhotosToPictures,
+    render: renderPhotos,
   };
 })();

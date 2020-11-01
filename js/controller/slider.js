@@ -1,26 +1,26 @@
-"use strict";
+'use strict';
 
 (function () {
-  const effectLevelSlider = document.querySelector(".effect-level");
-  const effectLevelLine = effectLevelSlider.querySelector(".effect-level__line");
-  const effectLevelDepth = effectLevelSlider.querySelector(".effect-level__depth");
-  const effectLevelPin = effectLevelSlider.querySelector(".effect-level__pin");
+  const effectLevelSlider = document.querySelector(`.effect-level`);
+  const effectLevelLine = effectLevelSlider.querySelector(`.effect-level__line`);
+  const effectLevelDepth = effectLevelSlider.querySelector(`.effect-level__depth`);
+  const effectLevelPin = effectLevelSlider.querySelector(`.effect-level__pin`);
 
-  const addEventListener = function (type, cb) {
+  const addEventListener = (type, cb) => {
 
-    effectLevelPin.addEventListener("mouseup", () => {
+    effectLevelPin.addEventListener(`mouseup`, () => {
       const value = Math.round((effectLevelDepth.clientWidth / effectLevelLine.clientWidth) * 100);
       cb(value);
     });
 
   };
 
-  const show = function () {
-    effectLevelSlider.style.display = "block";
+  const show = () => {
+    effectLevelSlider.style.display = `block`;
   };
 
-  const hide = function () {
-    effectLevelSlider.style.display = "none";
+  const hide = () => {
+    effectLevelSlider.style.display = `none`;
   };
 
   window.slider = {
