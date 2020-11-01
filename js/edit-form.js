@@ -17,6 +17,8 @@
   const photoPreview = editPhotoForm.querySelector(`.img-upload__preview img`);
   const effectLevel = document.querySelector(`.effect-level__value`);
   const textHashtags = uploadPhotoForm.querySelector(`.text__hashtags`);
+  const comment = document.querySelector(`.text__description`);
+
   let currentFilterName = `none`;
 
   // Обновить вид превьюшки по умолчанию
@@ -105,7 +107,7 @@
   });
 
   const inEditPhotoFormEscPress = (evt) => {
-    if (textHashtags === document.activeElement) {
+    if (textHashtags === document.activeElement || comment === document.activeElement) {
       return;
     }
 
@@ -148,6 +150,14 @@
 
     textHashtags.setCustomValidity(errorMessage);
     textHashtags.reportValidity();
+  });
+
+  // Валидация комментария
+  comment.addEventListener(`input`, () => {
+    const errorMessage = window.commentValidity.check(comment.value);
+
+    comment.setCustomValidity(errorMessage);
+    comment.reportValidity();
   });
 
   window.editForm = {
