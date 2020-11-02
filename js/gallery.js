@@ -11,6 +11,10 @@
     picture.querySelector(`.picture__img`).src = photo.url;
     picture.querySelector(`.picture__likes`).textContent = photo.likes;
     picture.querySelector(`.picture__comments`).textContent = photo.comments.length;
+    picture.addEventListener(`click`, (evt) => {
+      evt.preventDefault();
+      window.preview.show(photo);
+    });
 
     return picture;
   };
@@ -21,11 +25,6 @@
     photos.forEach((item) => {
       fragment.appendChild(renderPhoto(item));
     });
-
-    fragment.childNodes.forEach((elem, i) => elem.addEventListener(`click`, (evt) => {
-      evt.preventDefault();
-      window.preview.show(photos[i]);
-    }));
 
     pictures.appendChild(fragment);
   };
