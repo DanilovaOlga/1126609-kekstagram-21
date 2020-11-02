@@ -7,11 +7,6 @@
   const showGallery = (photosArray) => {
     const photoGallery = photosArray.slice();
     window.gallery.render(photoGallery);
-    const pictures = document.querySelectorAll(`.picture`);
-    pictures.forEach((elem, i) => elem.addEventListener(`click`, (evt) => {
-      evt.preventDefault();
-      window.preview.show(photosArray[i]);
-    }));
   };
 
   window.backend.load((allPhotosData) => {

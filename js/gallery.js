@@ -22,6 +22,11 @@
       fragment.appendChild(renderPhoto(item));
     });
 
+    fragment.childNodes.forEach((elem, i) => elem.addEventListener(`click`, (evt) => {
+        evt.preventDefault();
+        window.preview.show(photos[i]);
+      }));
+
     pictures.appendChild(fragment);
   };
 
