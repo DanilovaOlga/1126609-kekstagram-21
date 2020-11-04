@@ -7,10 +7,14 @@
 
   const Keys = {
     ESC: `Escape`,
+    LEFT: `ArrowLeft`,
+    RIGHT: `ArrowRight`,
   };
 
   window.helpers = {
     getRandomNumber: getRandomNumber,
     ESC: Keys.ESC,
+    LEFT: Keys.LEFT,
+    RIGHT: Keys.RIGHT,
   };
 })();

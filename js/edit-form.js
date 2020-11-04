@@ -18,14 +18,18 @@
   const effectLevel = document.querySelector(`.effect-level__value`);
   const textHashtags = uploadPhotoForm.querySelector(`.text__hashtags`);
   const comment = document.querySelector(`.text__description`);
+  const noneEffectInput = uploadPhotoForm.querySelector(`#effect-none`);
 
   let currentFilterName = `none`;
 
   // Обновить вид превьюшки по умолчанию
   const photoPreviewDefaultSettings = () => {
+    setFilter(`none`);
+    noneEffectInput.checked = true;
     currentImageScaleValue = Effect.MAX;
     imageScaleValue.value = `${Effect.MAX} %`;
     photoPreview.style.transform = `scale(1)`;
+    window.slider.setValue(Effect.MAX);
   };
 
   // Установить фильтр
@@ -39,10 +43,8 @@
       window.slider.show();
     }
 
-    setEffectLevel(Effect.MAX);
     applyEffectLevel(currentFilterName);
   };
-
 
   // Удаление класса с фильтром
   const removeFilter = () => {
@@ -60,7 +62,6 @@
   };
 
   // Установить насыщенность
-
   const applyEffectLevel = (filterName) => {
     const filter = {
       chrome: `grayscale(${effectLevel.value / Effect.MAX})`,
@@ -78,7 +79,6 @@
   // Выбор фильтра
   const photoFilterChangeHandler = (evt) => {
     if (evt.target && evt.target.matches(`.effects__radio`)) {
-      photoPreviewDefaultSettings();
       setFilter(evt.target.value);
     }
   };
@@ -91,8 +91,7 @@
     editPhotoForm.classList.remove(`hidden`);
     window.main.body.classList.add(`modal-open`);
     window.addEventListener(`keydown`, inEditPhotoFormEscPress);
-    setFilter(`none`);
-    imageScaleValue.value = `${Effect.MAX}%`;
+    photoPreviewDefaultSettings();
   };
 
   const closeEditPhotoForm = () => {
