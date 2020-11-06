@@ -19,6 +19,7 @@
   const textHashtags = uploadPhotoForm.querySelector(`.text__hashtags`);
   const comment = document.querySelector(`.text__description`);
   const noneEffectInput = uploadPhotoForm.querySelector(`#effect-none`);
+  const main = document.querySelector(`main`);
 
   let currentFilterName = `none`;
 
@@ -27,9 +28,11 @@
     setFilter(`none`);
     noneEffectInput.checked = true;
     currentImageScaleValue = Effect.MAX;
-    imageScaleValue.value = `${Effect.MAX} %`;
+    imageScaleValue.value = `${Effect.MAX}%`;
     photoPreview.style.transform = `scale(1)`;
     window.slider.setValue(Effect.MAX);
+    textHashtags.setCustomValidity(``);
+    comment.setCustomValidity(``);
   };
 
   // Установить фильтр
@@ -98,6 +101,7 @@
     editPhotoForm.classList.add(`hidden`);
     window.main.body.classList.remove(`modal-open`);
     window.removeEventListener(`keydown`, inEditPhotoFormEscPress);
+    uploadPhotoForm.reset();
   };
 
   closeEditPhotoFormButton.addEventListener(`click`, (evt) => {
@@ -157,6 +161,50 @@
 
     comment.setCustomValidity(errorMessage);
     comment.reportValidity();
+  });
+
+  // Сообщения при отправке формы
+  const showMessage = (status) => {
+    const template = document.querySelector(`#${status}`).content.querySelector(`.${status}`);
+    const message = template.cloneNode(true);
+    const button = message.querySelector(`.${status}__button`);
+
+    main.appendChild(message);
+
+    const removeMessage = (evt) => {
+      evt.preventDefault();
+      evt.stopPropagation();
+      main.removeChild(message);
+      window.removeEventListener(`keydown`, inMessageEscPress);
+    };
+
+    const inMessageEscPress = (evt) => {
+      if (evt.key === window.helpers.ESC) {
+        removeMessage(evt);
+      }
+    };
+    window.addEventListener(`keydown`, inMessageEscPress);
+
+    button.addEventListener(`click`, removeMessage);
+    message.addEventListener(`click`, removeMessage);
+  };
+
+  // Отправить форму
+  uploadPhotoForm.addEventListener(`submit`, (evt) => {
+    window.backend.request({
+      onSuccess: () => {
+        closeEditPhotoForm();
+        showMessage(`success`);
+      },
+      onError: () => {
+        closeEditPhotoForm();
+        showMessage(`error`);
+      },
+      url: `https://21.javascript.pages.academy/kekstagram`,
+      method: `POST`,
+      data: new FormData(uploadPhotoForm),
+    });
+    evt.preventDefault();
   });
 
   window.editForm = {
