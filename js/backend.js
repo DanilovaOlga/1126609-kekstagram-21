@@ -2,8 +2,6 @@
 
 (function () {
   const TIMEOUT = 10000;
-  const LOAD_URL = `https://21.javascript.pages.academy/kekstagram/data`;
-  const UPLOAD_URL = `https://21.javascript.pages.academy/kekstagram`;
   const Code = {
     OK: 200,
     BAD_REQUEST: 400,
@@ -11,15 +9,14 @@
     NOT_FOUND: 404,
   };
 
-  const loadData = (onSuccess, onError) => {
+  const request = (params) => {
     const xhr = new XMLHttpRequest();
-
     xhr.responseType = `json`;
     xhr.addEventListener(`load`, () => {
       let error;
       switch (xhr.status) {
         case Code.OK:
-          onSuccess(xhr.response);
+          params.onSuccess(xhr.response);
           break;
         case Code.BAD_REQUEST:
           error = `Неверный запрос`;
@@ -35,41 +32,24 @@
       }
 
       if (error) {
-        onError(error);
+        params.onError(error);
       }
     });
 
     xhr.addEventListener(`error`, () => {
-      onError(`Произошла ошибка соединения`);
+      params.onError(`Произошла ошибка соединения`);
     });
 
     xhr.addEventListener(`timeout`, () => {
-      onError(`Запрос не успел выполниться за ${xhr.timeout} мс`);
+      params.onError(`Запрос не успел выполниться за ${xhr.timeout} мс`);
     });
 
     xhr.timeout = TIMEOUT;
-    xhr.open(`GET`, LOAD_URL);
-    xhr.send();
-  };
-
-  const uploadData = (data, onSuccess, onError) => {
-    const xhr = new XMLHttpRequest();
-
-    xhr.responseType = `json`;
-    xhr.addEventListener('load', function () {
-      if (xhr.status === Code.OK) {
-        onSuccess(xhr.response);
-      } else {
-        onError();
-      }
-    });
-
-    xhr.open('POST', UPLOAD_URL);
-    xhr.send(data);
+    xhr.open(params.method, params.url);
+    xhr.send(params.data);
   };
 
   window.backend = {
-    load: loadData,
-    upload: uploadData,
+    request: request,
   };
 })();

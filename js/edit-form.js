@@ -191,13 +191,18 @@
 
   // Отправить форму
   uploadPhotoForm.addEventListener(`submit`, (evt) => {
-    window.backend.upload(new FormData(uploadPhotoForm), () => {
-      closeEditPhotoForm();
-      showMessage(`success`);
-    },
-    () => {
-      closeEditPhotoForm();
-      showMessage(`error`);
+    window.backend.request({
+      onSuccess: () => {
+        closeEditPhotoForm();
+        showMessage(`success`);
+      },
+      onError: () => {
+        closeEditPhotoForm();
+        showMessage(`error`);
+      },
+      url: `https://21.javascript.pages.academy/kekstagram`,
+      method: `POST`,
+      data: new FormData(uploadPhotoForm),
     });
     evt.preventDefault();
   });
