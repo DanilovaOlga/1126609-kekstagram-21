@@ -2,8 +2,10 @@
 
 (function () {
 
+  const body = document.querySelector(`body`);
   const uploadPhotoButton = document.querySelector(`#upload-file`);
   const errorBanner = document.querySelector(`.error-banner`);
+
   const showGallery = (photosArray) => {
     const photoGallery = photosArray.slice();
     window.gallery.render(photoGallery);
@@ -22,6 +24,7 @@
   });
 
   window.main = {
-    body: document.querySelector(`body`),
+    body: body,
+    uploadPhotoButton: uploadPhotoButton,
   };
 })();
