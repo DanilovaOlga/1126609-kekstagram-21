@@ -59,8 +59,7 @@
     xhr.addEventListener('load', function () {
       if (xhr.status === Code.OK) {
         onSuccess(xhr.response);
-      }
-      else {
+      } else {
         onError();
       }
     });

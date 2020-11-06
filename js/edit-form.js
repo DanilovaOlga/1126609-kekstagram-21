@@ -192,13 +192,13 @@
   // Отправить форму
   uploadPhotoForm.addEventListener(`submit`, (evt) => {
     window.backend.upload(new FormData(uploadPhotoForm), () => {
-        closeEditPhotoForm();
-        showMessage(`success`);
-      },
-      () => {
-        closeEditPhotoForm();
-        showMessage(`error`);
-      });
+      closeEditPhotoForm();
+      showMessage(`success`);
+    },
+    () => {
+      closeEditPhotoForm();
+      showMessage(`error`);
+    });
     evt.preventDefault();
   });
 
