@@ -21,6 +21,11 @@
 
   const renderPhotos = (photos) => {
     const fragment = document.createDocumentFragment();
+    const pictureList = document.querySelectorAll(`.picture`);
+
+    pictureList.forEach((picture) => {
+      pictures.removeChild(picture);
+    });
 
     photos.forEach((item) => {
       fragment.appendChild(renderPhoto(item));
@@ -29,7 +34,12 @@
     pictures.appendChild(fragment);
   };
 
+  const removePhotos = () => {
+    pictures.removeChild();
+  };
+
   window.gallery = {
     render: renderPhotos,
+    remove: removePhotos,
   };
 })();
