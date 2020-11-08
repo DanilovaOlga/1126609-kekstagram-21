@@ -1,6 +1,7 @@
 'use strict';
 (function () {
 
+  const UPLOAD_URL = `https://21.javascript.pages.academy/kekstagram`;
   const Effect = {
     MAX: 100,
     MIN: 25,
@@ -200,7 +201,7 @@
         closeEditPhotoForm();
         showMessage(`error`);
       },
-      url: `https://21.javascript.pages.academy/kekstagram`,
+      url: UPLOAD_URL,
       method: `POST`,
       data: new FormData(uploadPhotoForm),
     });
