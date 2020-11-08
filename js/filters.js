@@ -7,23 +7,23 @@
   const filterRandom = filters.querySelector(`#filter-random`);
   const filterDiscussed = filters.querySelector(`#filter-discussed`);
 
-  const applyRandomFilter = function (datas) {
-    datas = datas.slice();
+  const applyRandomFilter = function (dataset) {
+    dataset = dataset.slice();
 
     const result = [];
     for (let i = 0; i < 10; i++) {
-      let index = window.helpers.getRandomIndex(datas);
-      result.push(datas[index]);
-      datas.splice(index, 1);
+      let index = window.helpers.getRandomIndex(dataset);
+      result.push(dataset[index]);
+      dataset.splice(index, 1);
     }
 
     return result;
   };
 
-  const applyPopularFilter = function (datas) {
-    datas = datas.slice();
+  const applyPopularFilter = function (dataset) {
+    dataset = dataset.slice();
 
-    datas.sort(function (prewPhoto, nextPhoto) {
+    dataset.sort(function (prewPhoto, nextPhoto) {
       let a = prewPhoto.comments.length;
       let b = nextPhoto.comments.length;
 
@@ -37,14 +37,40 @@
         return 1;
       }
 
-      return datas;
+      return dataset;
     });
 
-    return datas;
+    return dataset;
   };
 
-  const initFilters = (cb, datas) => {
+  const debounce = (cb) => {
+    let lastTimeout = null;
+
+    return (...args) => {
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+
+      lastTimeout = window.setTimeout(() => {
+        cb(...args);
+      }, 500);
+    };
+  };
+
+  const initFilters = (showGallery, dataset) => {
     filters.classList.remove("img-filters--inactive");
+
+    const setDefaultFilter = debounce(() => {
+      showGallery(dataset);
+    });
+
+    const setRandomFilter = debounce(() => {
+      showGallery(applyRandomFilter(dataset));
+    });
+
+    const setPopularFilter = debounce(() => {
+      showGallery(applyPopularFilter(dataset));
+    });
 
     filtersButtons.forEach((button) => {
       button.addEventListener(`click`, (evt) => {
@@ -58,16 +84,15 @@
 
         switch (button) {
           case filterDefault:
-            cb(datas);
+            setDefaultFilter();
             break;
           case filterRandom:
-            cb(applyRandomFilter(datas));
+            setRandomFilter();
             break;
           case filterDiscussed:
-            cb(applyPopularFilter(datas));
+            setPopularFilter();
             break;
         }
-
       });
     });
   };
