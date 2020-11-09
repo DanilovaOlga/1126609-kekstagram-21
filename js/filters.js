@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  const MAX_RANDOM_PHOTO = 10;
   const filters = document.querySelector(`.img-filters`);
   const filtersButtons = filters.querySelectorAll(`.img-filters__button`);
   const filterDefault = filters.querySelector(`#filter-default`);
@@ -11,7 +12,7 @@
     dataset = dataset.slice();
 
     const result = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < MAX_RANDOM_PHOTO; i++) {
       let index = window.helpers.getRandomIndex(dataset);
       result.push(dataset[index]);
       dataset.splice(index, 1);
