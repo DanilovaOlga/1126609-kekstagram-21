@@ -22,7 +22,7 @@
 
     commentCount = socialComments.children.length;
     socialCommentCount.innerHTML = `${commentCount} из <span class="comments-count">${currentPhotoData.comments.length}</span> комментариев`;
-    if (commentCount === currentPhotoData.comments.length){
+    if (commentCount === currentPhotoData.comments.length) {
       loaderButton.classList.add(`hidden`);
     }
   };
@@ -41,7 +41,7 @@
     bigPictureSocial.querySelector(`.comments-count`).textContent = photoData.comments.length;
 
     Array.from(socialComments.children).forEach((comment) => {
-      socialComments.removeChild(comment)
+      socialComments.removeChild(comment);
     });
 
     addComments(photoData.comments.slice(0, COMMENTS_NUMBER));
