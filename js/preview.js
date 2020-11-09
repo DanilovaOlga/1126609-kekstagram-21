@@ -2,45 +2,60 @@
 
 (function () {
 
+  const COMMENTS_NUMBER = 5;
   const bigPicture = document.querySelector(`.big-picture`);
-  const placeDataToBigPhoto = (photoData, bigPhotoElem) => {
+  const bigPictureSocial = bigPicture.querySelector(`.big-picture__social`);
+  const socialComments = bigPictureSocial.querySelector(`.social__comments`);
+  const socialComment = bigPictureSocial.querySelector(`.social__comment`);
+  const loaderButton = bigPictureSocial.querySelector(`.social__comments-loader`);
+  const socialCommentCount = bigPictureSocial.querySelector(`.social__comment-count`);
+  let commentCount = 0;
+  let currentPhotoData;
 
-    // Добавить фото и описание
-    bigPhotoElem.querySelector(`.big-picture__img img`).src = photoData.url;
-    const bigPictureSocial = bigPhotoElem.querySelector(`.big-picture__social`);
+  const addComments = (arr) => {
+    arr.forEach((comment) => {
+      socialComment.querySelector(`.social__picture`).src = comment.avatar;
+      socialComment.querySelector(`.social__picture`).alt = comment.name;
+      socialComment.querySelector(`.social__text`).textContent = comment.message;
+      socialComments.appendChild(socialComment.cloneNode(true));
+    });
+
+    commentCount = socialComments.children.length;
+    socialCommentCount.innerHTML = `${commentCount} из <span class="comments-count">${currentPhotoData.comments.length}</span> комментариев`;
+    if (commentCount === currentPhotoData.comments.length){
+      loaderButton.classList.add(`hidden`);
+    }
+  };
+
+  loaderButton.addEventListener(`click`, (evt) => {
+    evt.preventDefault();
+    addComments(currentPhotoData.comments.slice(commentCount, commentCount + COMMENTS_NUMBER));
+  });
+
+  const placeDataToBigPhoto = (photoData) => {
+    currentPhotoData = photoData;
+
+    bigPicture.querySelector(`.big-picture__img img`).src = photoData.url;
     bigPictureSocial.querySelector(`.likes-count`).textContent = photoData.likes;
     bigPictureSocial.querySelector(`.social__caption`).textContent = photoData.description;
     bigPictureSocial.querySelector(`.comments-count`).textContent = photoData.comments.length;
 
-    // Удалить все коменты
-    const socialComments = bigPictureSocial.querySelector(`.social__comments`);
-    const socialComment = bigPictureSocial.querySelector(`.social__comment`);
-    const socialCommentChildList = socialComments.children;
-    for (let i = 0; i < socialCommentChildList.length;) {
-      socialComments.removeChild(socialCommentChildList[i]);
-    }
+    Array.from(socialComments.children).forEach((comment) => {
+      socialComments.removeChild(comment)
+    });
 
-    // Добавить коменты
-    for (let i = 0; i < photoData.comments.length; i++) {
-      socialComment.querySelector(`.social__picture`).src = photoData.comments[i].avatar;
-      socialComment.querySelector(`.social__picture`).alt = photoData.comments[i].name;
-      socialComment.querySelector(`.social__text`).textContent = photoData.comments[i].message;
-      socialComments.appendChild(socialComment.cloneNode(true));
-    }
+    addComments(photoData.comments.slice(0, COMMENTS_NUMBER));
   };
 
   const showBigPhoto = (onePhotoData) => {
     window.main.body.classList.add(`modal-open`);
     bigPicture.classList.remove(`hidden`);
-    window.preview.placeDataToBigPhoto(onePhotoData, bigPicture);
-    document.querySelector(`.social__comment-count`).classList.add(`hidden`);
-    document.querySelector(`.comments-loader`).classList.add(`hidden`);
+    loaderButton.classList.remove(`hidden`);
+    placeDataToBigPhoto(onePhotoData);
     window.addEventListener(`keydown`, inShowBigPhotoEscPress);
   };
 
-  const closeBigPictureButton = bigPicture.querySelector(`.big-picture__cancel`);
-
-  const closeBigPicture = () => {
+  const closeBigPhoto = () => {
     window.main.body.classList.remove(`modal-open`);
     bigPicture.classList.add(`hidden`);
     window.removeEventListener(`keydown`, inShowBigPhotoEscPress);
@@ -49,17 +64,17 @@
   const inShowBigPhotoEscPress = (evt) => {
     if (evt.key === window.helpers.ESC) {
       evt.preventDefault();
-      closeBigPicture();
+      closeBigPhoto();
     }
   };
 
-  closeBigPictureButton.addEventListener(`click`, (evt) => {
+  const closeBigPhotoButton = bigPicture.querySelector(`.big-picture__cancel`);
+  closeBigPhotoButton.addEventListener(`click`, (evt) => {
     evt.preventDefault();
-    closeBigPicture();
+    closeBigPhoto();
   });
 
   window.preview = {
-    placeDataToBigPhoto: placeDataToBigPhoto,
     show: showBigPhoto,
   };
 })();
