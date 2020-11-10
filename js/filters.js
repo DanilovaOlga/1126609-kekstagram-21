@@ -1,6 +1,7 @@
 'use strict';
 
 const MAX_RANDOM_PHOTO = 10;
+const TIMEOUT = 500;
 const filters = document.querySelector(`.img-filters`);
 const filtersButtons = filters.querySelectorAll(`.img-filters__button`);
 const filterDefault = filters.querySelector(`#filter-default`);
@@ -53,7 +54,7 @@ const debounce = (cb) => {
 
     lastTimeout = window.setTimeout(() => {
       cb(...args);
-    }, 500);
+    }, TIMEOUT);
   };
 };
 
