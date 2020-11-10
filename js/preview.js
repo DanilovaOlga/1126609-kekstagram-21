@@ -8,6 +8,7 @@ const socialComment = bigPictureSocial.querySelector(`.social__comment`);
 const loaderButton = bigPictureSocial.querySelector(`.social__comments-loader`);
 const socialCommentCount = bigPictureSocial.querySelector(`.social__comment-count`);
 let commentCount = 0;
+let commentTotal;
 let currentPhotoData;
 
 const addComments = (arr) => {
@@ -19,7 +20,7 @@ const addComments = (arr) => {
   });
 
   commentCount = socialComments.children.length;
-  socialCommentCount.innerHTML = `${commentCount} из <span class="comments-count">${currentPhotoData.comments.length}</span> комментариев`;
+  socialCommentCount.textContent = `${commentCount} из ${commentTotal} комментариев`;
   if (commentCount === currentPhotoData.comments.length) {
     loaderButton.classList.add(`hidden`);
   }
@@ -36,7 +37,7 @@ const placeDataToBigPhoto = (photoData) => {
   bigPicture.querySelector(`.big-picture__img img`).src = photoData.url;
   bigPictureSocial.querySelector(`.likes-count`).textContent = photoData.likes;
   bigPictureSocial.querySelector(`.social__caption`).textContent = photoData.description;
-  bigPictureSocial.querySelector(`.comments-count`).textContent = photoData.comments.length;
+  commentTotal = photoData.comments.length;
 
   Array.from(socialComments.children).forEach((comment) => {
     socialComments.removeChild(comment);
