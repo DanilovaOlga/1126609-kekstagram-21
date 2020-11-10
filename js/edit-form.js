@@ -1,5 +1,6 @@
 'use strict';
 
+const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
 const UPLOAD_URL = `https://21.javascript.pages.academy/kekstagram`;
 const Effect = {
   MAX: 100,
@@ -88,6 +89,25 @@ const photoFilterChangeHandler = (evt) => {
 uploadPhotoForm.addEventListener(`change`, photoFilterChangeHandler);
 
 window.slider.change(`change`, setEffectLevel);
+
+// Загрузка своего изображения
+const loadPhoto = () => {
+  const file = window.main.uploadPhotoButton.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some(function (extension) {
+    return fileName.endsWith(extension);
+  });
+
+  if (matches) {
+    const reader = new FileReader();
+    reader.addEventListener(`load`, function () {
+      window.editForm.preview.src = reader.result;
+    });
+    reader.readAsDataURL(file);
+    openEditPhotoForm();
+  }
+};
 
 // Открыть/закрыть форму
 const openEditPhotoForm = () => {
@@ -208,5 +228,6 @@ uploadPhotoForm.addEventListener(`submit`, (evt) => {
 });
 
 window.editForm = {
-  open: openEditPhotoForm,
+  open: loadPhoto,
+  preview: photoPreview,
 };
