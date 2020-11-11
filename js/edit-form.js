@@ -21,7 +21,7 @@ const textHashtags = uploadPhotoForm.querySelector(`.text__hashtags`);
 const comment = document.querySelector(`.text__description`);
 const noneEffectInput = uploadPhotoForm.querySelector(`#effect-none`);
 const main = document.querySelector(`main`);
-
+const effectsPreview = editPhotoForm.querySelectorAll(`.effects__preview`);
 let currentFilterName = `none`;
 
 // Обновить вид превьюшки по умолчанию
@@ -103,6 +103,9 @@ const loadPhoto = () => {
     const reader = new FileReader();
     reader.addEventListener(`load`, function () {
       window.editForm.preview.src = reader.result;
+      effectsPreview.forEach((preview) => {
+        preview.style.backgroundImage = `url(${reader.result})`;
+      });
     });
     reader.readAsDataURL(file);
     openEditPhotoForm();
