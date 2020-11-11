@@ -11,7 +11,6 @@ const Effect = {
   BRIGHTNESS_MIN: 1,
 };
 
-// Загрузка фотографии, открытие формы для редактирования
 const uploadPhotoForm = document.querySelector(`.img-upload__form`);
 const editPhotoForm = uploadPhotoForm.querySelector(`.img-upload__overlay`);
 const closeEditPhotoFormButton = uploadPhotoForm.querySelector(`.img-upload__cancel`);
@@ -24,7 +23,6 @@ const main = document.querySelector(`main`);
 const effectsPreview = editPhotoForm.querySelectorAll(`.effects__preview`);
 let currentFilterName = `none`;
 
-// Обновить вид превьюшки по умолчанию
 const photoPreviewDefaultSettings = () => {
   setFilter(`none`);
   noneEffectInput.checked = true;
@@ -36,7 +34,6 @@ const photoPreviewDefaultSettings = () => {
   comment.setCustomValidity(``);
 };
 
-// Установить фильтр
 const setFilter = (filterName) => {
   currentFilterName = filterName;
   removeFilter();
@@ -50,7 +47,6 @@ const setFilter = (filterName) => {
   applyEffectLevel(currentFilterName);
 };
 
-// Удаление класса с фильтром
 const removeFilter = () => {
   for (let i = 0; i < photoPreview.classList.length; i++) {
     const filterName = photoPreview.classList[i];
@@ -65,7 +61,6 @@ const setEffectLevel = (level) => {
   applyEffectLevel(currentFilterName);
 };
 
-// Установить насыщенность
 const applyEffectLevel = (filterName) => {
   const filter = {
     chrome: `grayscale(${effectLevel.value / Effect.MAX})`,
@@ -80,7 +75,6 @@ const applyEffectLevel = (filterName) => {
 };
 
 
-// Выбор фильтра
 const photoFilterChangeHandler = (evt) => {
   if (evt.target && evt.target.matches(`.effects__radio`)) {
     setFilter(evt.target.value);
@@ -90,7 +84,6 @@ uploadPhotoForm.addEventListener(`change`, photoFilterChangeHandler);
 
 window.slider.change(`change`, setEffectLevel);
 
-// Загрузка своего изображения
 const loadPhoto = () => {
   const file = window.main.uploadPhotoButton.files[0];
   const fileName = file.name.toLowerCase();
@@ -112,7 +105,6 @@ const loadPhoto = () => {
   }
 };
 
-// Открыть/закрыть форму
 const openEditPhotoForm = () => {
   editPhotoForm.classList.remove(`hidden`);
   window.main.body.classList.add(`modal-open`);
@@ -143,7 +135,6 @@ const inEditPhotoFormEscPress = (evt) => {
   }
 };
 
-// Выбор размера изображения
 const imageScale = document.querySelector(`.img-upload__scale`);
 const zoomOutButton = imageScale.querySelector(`.scale__control--smaller`);
 const zoomInButton = imageScale.querySelector(`.scale__control--bigger`);
@@ -170,7 +161,6 @@ zoomInButton.addEventListener(`click`, (evt) => {
   }
 });
 
-// Валидация хэштегов
 textHashtags.addEventListener(`input`, () => {
   const errorMessage = window.hashtagsValidity.check(textHashtags.value);
 
@@ -178,7 +168,6 @@ textHashtags.addEventListener(`input`, () => {
   textHashtags.reportValidity();
 });
 
-// Валидация комментария
 comment.addEventListener(`input`, () => {
   const errorMessage = window.commentValidity.check(comment.value);
 
@@ -186,7 +175,6 @@ comment.addEventListener(`input`, () => {
   comment.reportValidity();
 });
 
-// Сообщения при отправке формы
 const showMessage = (status) => {
   const template = document.querySelector(`#${status}`).content.querySelector(`.${status}`);
   const message = template.cloneNode(true);
@@ -212,7 +200,6 @@ const showMessage = (status) => {
   message.addEventListener(`click`, removeMessage);
 };
 
-// Отправить форму
 uploadPhotoForm.addEventListener(`submit`, (evt) => {
   window.backend.request({
     onSuccess: () => {

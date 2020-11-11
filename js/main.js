@@ -33,6 +33,6 @@ uploadPhotoButton.addEventListener(`change`, (evt) => {
 });
 
 window.main = {
-  body: body,
-  uploadPhotoButton: uploadPhotoButton,
+  body,
+  uploadPhotoButton,
 };

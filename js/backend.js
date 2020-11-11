@@ -49,5 +49,5 @@ const request = (params) => {
 };
 
 window.backend = {
-  request: request,
+  request,
 };

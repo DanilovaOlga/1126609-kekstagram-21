@@ -80,9 +80,8 @@ const hide = () => {
 };
 
 window.slider = {
-  show: show,
-  hide: hide,
+  show,
+  hide,
   change: changeValue,
-  setValue: setValue,
-  getValue: getValue,
+  setValue,
 };

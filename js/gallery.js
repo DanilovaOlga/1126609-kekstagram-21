@@ -32,11 +32,6 @@ const renderPhotos = (photos) => {
   pictures.appendChild(fragment);
 };
 
-const removePhotos = () => {
-  pictures.removeChild();
-};
-
 window.gallery = {
   render: renderPhotos,
-  remove: removePhotos,
 };

@@ -1,9 +1,9 @@
 'use strict';
 
-const re = /^#[a-zA-Z0-9]+$/;
 const MIN_HASHTAG_LENGTH = 2;
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_HASHTAGS_QUANTITY = 5;
+const re = /^#[a-zA-Z0-9]+$/;
 
 const checkTag = (hashtag) => {
 
