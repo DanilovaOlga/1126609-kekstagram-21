@@ -51,16 +51,16 @@ const showBigPhoto = (onePhotoData) => {
   bigPicture.classList.remove(`hidden`);
   loaderButton.classList.remove(`hidden`);
   placeDataToBigPhoto(onePhotoData);
-  window.addEventListener(`keydown`, inShowBigPhotoEscPress);
+  window.addEventListener(`keydown`, onShowBigPhotoEscPress);
 };
 
 const closeBigPhoto = () => {
   window.main.body.classList.remove(`modal-open`);
   bigPicture.classList.add(`hidden`);
-  window.removeEventListener(`keydown`, inShowBigPhotoEscPress);
+  window.removeEventListener(`keydown`, onShowBigPhotoEscPress);
 };
 
-const inShowBigPhotoEscPress = (evt) => {
+const onShowBigPhotoEscPress = (evt) => {
   if (evt.key === window.helpers.ESC) {
     evt.preventDefault();
     closeBigPhoto();

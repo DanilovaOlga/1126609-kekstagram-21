@@ -1,6 +1,8 @@
 'use strict';
 
 const EFFECT_STEP = 1;
+const MAX_VALUE = 100;
+const MIN_VALUE = 0;
 const effectLevelSlider = document.querySelector(`.effect-level`);
 const effectLevelLine = effectLevelSlider.querySelector(`.effect-level__line`);
 const effectLevelDepth = effectLevelSlider.querySelector(`.effect-level__depth`);
@@ -26,8 +28,8 @@ effectLevelPin.addEventListener(`mousedown`, (evt) => {
 
     const newLeft = effectLevelPin.offsetLeft - shift;
 
-    if (newLeft >= 0 && newLeft <= effectLevelLine.clientWidth) {
-      const value = Math.round((newLeft / effectLevelLine.clientWidth) * 100);
+    if (newLeft >= MIN_VALUE && newLeft <= effectLevelLine.clientWidth) {
+      const value = Math.round((newLeft / effectLevelLine.clientWidth) * MAX_VALUE);
       setValue(value);
     }
   };
@@ -47,7 +49,7 @@ effectLevelPin.addEventListener(`keydown`, (evt) => {
   if (evt.code === window.helpers.LEFT) {
     evt.preventDefault();
 
-    if (getValue() > 0) {
+    if (getValue() > MIN_VALUE) {
       setValue(getValue() - EFFECT_STEP);
     }
   }
@@ -55,14 +57,14 @@ effectLevelPin.addEventListener(`keydown`, (evt) => {
   if (evt.code === window.helpers.RIGHT) {
     evt.preventDefault();
 
-    if (getValue() < 100) {
+    if (getValue() < MAX_VALUE) {
       setValue(getValue() + EFFECT_STEP);
     }
   }
 });
 
 const getValue = () => {
-  return Math.round((effectLevelPin.offsetLeft / effectLevelLine.clientWidth) * 100);
+  return Math.round((effectLevelPin.offsetLeft / effectLevelLine.clientWidth) * MAX_VALUE);
 };
 
 const setValue = (value) => {

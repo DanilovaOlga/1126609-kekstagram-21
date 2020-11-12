@@ -6,7 +6,7 @@ const Keys = {
   RIGHT: `ArrowRight`,
 };
 
-const getRandomIndex = function (arr) {
+const getRandomIndex = (arr) => {
   return Math.floor(Math.random() * arr.length);
 };
 

@@ -8,7 +8,7 @@ const filterDefault = filters.querySelector(`#filter-default`);
 const filterRandom = filters.querySelector(`#filter-random`);
 const filterDiscussed = filters.querySelector(`#filter-discussed`);
 
-const applyRandomFilter = function (dataset) {
+const applyRandomFilter = (dataset) => {
   dataset = dataset.slice();
 
   const result = [];
@@ -21,10 +21,10 @@ const applyRandomFilter = function (dataset) {
   return result;
 };
 
-const applyPopularFilter = function (dataset) {
+const applyPopularFilter = (dataset) => {
   dataset = dataset.slice();
 
-  dataset.sort(function (prewPhoto, nextPhoto) {
+  dataset.sort((prewPhoto, nextPhoto) => {
     let a = prewPhoto.comments.length;
     let b = nextPhoto.comments.length;
 
@@ -34,11 +34,7 @@ const applyPopularFilter = function (dataset) {
     if (a === b) {
       return 0;
     }
-    if (a < b) {
-      return 1;
-    }
-
-    return dataset;
+    return 1;
   });
 
   return dataset;

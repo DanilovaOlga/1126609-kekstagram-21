@@ -23,7 +23,7 @@ const main = document.querySelector(`main`);
 const effectsPreview = editPhotoForm.querySelectorAll(`.effects__preview`);
 let currentFilterName = `none`;
 
-const photoPreviewDefaultSettings = () => {
+const setPhotoPreviewDefaultSettings = () => {
   setFilter(`none`);
   noneEffectInput.checked = true;
   currentImageScaleValue = Effect.MAX;
@@ -48,12 +48,12 @@ const setFilter = (filterName) => {
 };
 
 const removeFilter = () => {
-  for (let i = 0; i < photoPreview.classList.length; i++) {
-    const filterName = photoPreview.classList[i];
+  const filters = photoPreview.classList;
+  filters.forEach((filterName) => {
     if (filterName.startsWith(`effects__preview--`)) {
-      photoPreview.classList.remove(filterName);
+      filters.remove(filterName);
     }
-  }
+  });
 };
 
 const setEffectLevel = (level) => {
@@ -75,12 +75,12 @@ const applyEffectLevel = (filterName) => {
 };
 
 
-const photoFilterChangeHandler = (evt) => {
+const onPhotoFilterChange = (evt) => {
   if (evt.target && evt.target.matches(`.effects__radio`)) {
     setFilter(evt.target.value);
   }
 };
-uploadPhotoForm.addEventListener(`change`, photoFilterChangeHandler);
+uploadPhotoForm.addEventListener(`change`, onPhotoFilterChange);
 
 window.slider.change(`change`, setEffectLevel);
 
@@ -88,13 +88,13 @@ const loadPhoto = () => {
   const file = window.main.uploadPhotoButton.files[0];
   const fileName = file.name.toLowerCase();
 
-  const matches = FILE_TYPES.some(function (extension) {
+  const matches = FILE_TYPES.some((extension) => {
     return fileName.endsWith(extension);
   });
 
   if (matches) {
     const reader = new FileReader();
-    reader.addEventListener(`load`, function () {
+    reader.addEventListener(`load`, () => {
       window.editForm.preview.src = reader.result;
       effectsPreview.forEach((preview) => {
         preview.style.backgroundImage = `url(${reader.result})`;
@@ -108,14 +108,14 @@ const loadPhoto = () => {
 const openEditPhotoForm = () => {
   editPhotoForm.classList.remove(`hidden`);
   window.main.body.classList.add(`modal-open`);
-  window.addEventListener(`keydown`, inEditPhotoFormEscPress);
-  photoPreviewDefaultSettings();
+  window.addEventListener(`keydown`, onEditPhotoFormEscPress);
+  setPhotoPreviewDefaultSettings();
 };
 
 const closeEditPhotoForm = () => {
   editPhotoForm.classList.add(`hidden`);
   window.main.body.classList.remove(`modal-open`);
-  window.removeEventListener(`keydown`, inEditPhotoFormEscPress);
+  window.removeEventListener(`keydown`, onEditPhotoFormEscPress);
   uploadPhotoForm.reset();
 };
 
@@ -124,7 +124,7 @@ closeEditPhotoFormButton.addEventListener(`click`, (evt) => {
   closeEditPhotoForm();
 });
 
-const inEditPhotoFormEscPress = (evt) => {
+const onEditPhotoFormEscPress = (evt) => {
   if (textHashtags === document.activeElement || comment === document.activeElement) {
     return;
   }
@@ -182,22 +182,24 @@ const showMessage = (status) => {
 
   main.appendChild(message);
 
-  const removeMessage = (evt) => {
+  const onMessageClick = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
     main.removeChild(message);
-    window.removeEventListener(`keydown`, inMessageEscPress);
+    window.removeEventListener(`keydown`, onMessageEscPress);
   };
 
-  const inMessageEscPress = (evt) => {
+  const onMessageEscPress = (evt) => {
     if (evt.key === window.helpers.ESC) {
-      removeMessage(evt);
+      evt.preventDefault();
+      main.removeChild(message);
+      window.removeEventListener(`keydown`, onMessageEscPress);
     }
   };
-  window.addEventListener(`keydown`, inMessageEscPress);
+  window.addEventListener(`keydown`, onMessageEscPress);
 
-  button.addEventListener(`click`, removeMessage);
-  message.addEventListener(`click`, removeMessage);
+  button.addEventListener(`click`, onMessageClick);
+  message.addEventListener(`click`, onMessageClick);
 };
 
 uploadPhotoForm.addEventListener(`submit`, (evt) => {

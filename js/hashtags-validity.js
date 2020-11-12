@@ -11,12 +11,12 @@ const checkTag = (hashtag) => {
     return `Хэштеги разделяются пробелами`;
   }
 
-  if (re.test(hashtag) === false) {
-    return `Хэштег должен начинаться с символа # и состоять только из букв и цифр`;
-  }
-
   if (hashtag.length < MIN_HASHTAG_LENGTH) {
     return `Хэштег не может состоять только из одной решётки`;
+  }
+
+  if (!re.test(hashtag)) {
+    return `Хэштег должен начинаться с символа # и состоять только из букв и цифр`;
   }
 
   if (hashtag.length > MAX_HASHTAG_LENGTH) {
